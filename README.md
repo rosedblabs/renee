@@ -7,8 +7,8 @@ todo
 
 ## Supported backend storage
 
-- [LotusDB](https://github.com/lotusdblabs/lotusdb) (default)
+- [Pebble](https://github.com/cockroachdb/pebble) (default)
+- [LotusDB](https://github.com/lotusdblabs/lotusdb)
 - [RoseDB](https://github.com/rosedblabs/rosedb)
-- [Pebble](https://github.com/cockroachdb/pebble)
 - [Badger](https://github.com/dgraph-io/badger)
 - [BoltDB](https://github.com/etcd-io/bbolt)
