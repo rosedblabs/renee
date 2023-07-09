@@ -5,29 +5,39 @@ import (
 )
 
 type PebbleStore struct {
-	db *pebble.DB
+	db      *pebble.DB
+	options Options
 }
 
-func newPebbleStore() (*Store, error) {
-	return nil, nil
+func newPebbleStore(options Options) (Store, error) {
+	pebbleOpts := new(pebble.Options)
+	pebbleOpts.BytesPerSync = int(options.BytesPerSync)
+	db, err := pebble.Open(options.DirPath, pebbleOpts)
+	if err != nil {
+		return nil, err
+	}
+	return &PebbleStore{db: db, options: options}, nil
 }
 
-func (ps *PebbleStore) Get([]byte) ([]byte, error) {
-	return nil, nil
+func (ps *PebbleStore) Get(key []byte) ([]byte, error) {
+	value, closer, err := ps.db.Get(key)
+	if closer != nil {
+		// handle the closer? todo
+	}
+	return value, err
 }
 
-func (ps *PebbleStore) Put([]byte, []byte) error {
-	return nil
+func (ps *PebbleStore) Put(key []byte, value []byte) error {
+	return ps.db.Set(key, value, &pebble.WriteOptions{Sync: ps.options.Sync})
 }
 
-func (ps *PebbleStore) Delete([]byte) error {
-	return nil
-}
-
-func (ps *PebbleStore) Commit() error {
-	return nil
+func (ps *PebbleStore) Delete(key []byte) error {
+	return ps.db.Delete(key, &pebble.WriteOptions{Sync: ps.options.Sync})
 }
 
 func (ps *PebbleStore) Close() error {
+	if ps.db != nil {
+		return ps.db.Close()
+	}
 	return nil
 }
