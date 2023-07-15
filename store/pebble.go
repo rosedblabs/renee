@@ -36,8 +36,5 @@ func (ps *PebbleStore) Delete(key []byte) error {
 }
 
 func (ps *PebbleStore) Close() error {
-	if ps.db != nil {
-		return ps.db.Close()
-	}
-	return nil
+	return ps.db.Close()
 }

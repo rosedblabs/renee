@@ -5,6 +5,7 @@ go 1.19
 require (
 	github.com/cockroachdb/pebble v0.0.0-20230707214756-fa85ec45a815
 	github.com/dgraph-io/badger/v4 v4.1.0
+	go.etcd.io/bbolt v1.3.7
 )
 
 require (
