@@ -1,5 +1,7 @@
 package renee
 
+import "os"
+
 type Options struct {
 	// DirPath specifies the directory path where the WAL segment files will be stored.
 	DirPath string
@@ -28,3 +30,22 @@ const (
 	Badger
 	Bolt
 )
+
+const (
+	B  = 1
+	KB = 1024 * B
+	MB = 1024 * KB
+	GB = 1024 * MB
+)
+
+var DefaultOptions = Options{
+	DirPath:        tempDBDir(),
+	Sync:           false,
+	BytesPerSync:   0,
+	BackendStorage: Pebble,
+}
+
+func tempDBDir() string {
+	dir, _ := os.MkdirTemp("", "renee-temp")
+	return dir
+}

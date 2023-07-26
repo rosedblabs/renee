@@ -24,6 +24,9 @@ func (ps *PebbleStore) Get(key []byte) ([]byte, error) {
 	if closer != nil {
 		// handle the closer? todo
 	}
+	if err == pebble.ErrNotFound {
+		err = nil
+	}
 	return value, err
 }
 

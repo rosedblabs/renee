@@ -10,6 +10,16 @@ type Service struct {
 	options Options
 }
 
+type DataType = uint8
+
+const (
+	String DataType = iota + 1
+	Hash
+	List
+	Set
+	ZSet
+)
+
 func New(options Options) (*Service, error) {
 	backend, err := store.Open(store.Options{
 		DirPath:      options.DirPath,
@@ -21,14 +31,6 @@ func New(options Options) (*Service, error) {
 	}
 
 	return &Service{store: backend, options: options}, nil
-}
-
-func (s *Service) Set(key []byte, value []byte, ttl time.Duration) error {
-	return nil
-}
-
-func (s *Service) Get(key []byte) ([]byte, error) {
-	return nil, nil
 }
 
 func (s *Service) Del(key []byte) error {
